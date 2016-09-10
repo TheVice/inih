@@ -34,7 +34,7 @@ long INIReader::GetInteger(const std::string& section, const std::string& name, 
     long n = 0;
     try {
         // This parses "1234" (decimal) and also "0x4D2" (hex)
-        n = std::stoi(valstr);
+        n = std::stol(valstr);
     }
     catch (...) {
         n = default_value;
@@ -55,7 +55,7 @@ double INIReader::GetReal(const std::string& section, const std::string& name, d
     return n;
 }
 
-bool INIReader::GetBoolean(std::string section, std::string name, bool default_value) const
+bool INIReader::GetBoolean(const std::string& section, const std::string& name, bool default_value) const
 {
     static const auto true_pattern = std::regex("[Tt][Rr][Uu][Ee]||[Yy][Ee][Ss]||[Oo][Nn]||[1]");
     static const auto false_pattern = std::regex("[Ff][Aa][Ll][Ss][Ee]||[Nn][Oo]||[Oo][Ff][Ff]||[0]");

@@ -40,13 +40,14 @@ public:
     // Get a boolean value from INI file, returning default_value if not found or if
     // not a valid true/false value. Valid true values are "true", "yes", "on", "1",
     // and valid false values are "false", "no", "off", "0" (not case sensitive).
-    bool GetBoolean(std::string section, std::string name, bool default_value) const;
+    bool GetBoolean(const std::string& section, const std::string& name, bool default_value) const;
 
 public:
     INIReader() = delete;
     INIReader(const INIReader& rhs) = delete;
     INIReader(const INIReader&& lhs) = delete;
     INIReader& operator = (const INIReader& rhs) = delete;
+    INIReader& operator = (const INIReader&& lhs) = delete;
 
 private:
     int _error;
