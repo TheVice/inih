@@ -33,12 +33,16 @@ endif()
 # ini
 set(Ini_Path ${CMAKE_CURRENT_SOURCE_DIR})
 add_library(ini "${Ini_Path}/ini.c" "${Ini_Path}/ini.h")
-set_target_properties(ini PROPERTIES COMPILE_FLAGS ${PROJECT_DEFINITIONS})
+if(WIN32)
+  set_target_properties(ini PROPERTIES COMPILE_FLAGS ${PROJECT_DEFINITIONS})
+endif()
 
 # INIReader
 set(Ini_Reader_Path ${CMAKE_CURRENT_SOURCE_DIR}/cpp)
 add_library(ini_reader "${Ini_Reader_Path}/INIReader.cpp" "${Ini_Reader_Path}/INIReader.h")
-set_target_properties(ini_reader PROPERTIES COMPILE_FLAGS ${PROJECT_DEFINITIONS})
+if(WIN32)
+  set_target_properties(ini_reader PROPERTIES COMPILE_FLAGS ${PROJECT_DEFINITIONS})
+endif()
 
 # Copy assets
 add_custom_target(copyAssets)
@@ -52,8 +56,10 @@ add_custom_command(TARGET copyAssets PRE_BUILD
 # INIReaderTest
 set(INIReaderTest_Path ${Ini_Reader_Path})
 add_executable(INIReaderTest "${INIReaderTest_Path}/INIReaderTest.cpp")
-target_link_libraries(INIReaderTest ini ini_reader)
-set_target_properties(INIReaderTest PROPERTIES COMPILE_FLAGS ${PROJECT_DEFINITIONS})
+target_link_libraries(INIReaderTest ini_reader ini)
+if(WIN32)
+  set_target_properties(INIReaderTest PROPERTIES COMPILE_FLAGS ${PROJECT_DEFINITIONS})
+endif()
 target_include_directories(INIReaderTest PRIVATE ${Ini_Path} ${Ini_Reader_Path})
 add_dependencies(INIReaderTest copyAssets)
 
