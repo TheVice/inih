@@ -57,6 +57,14 @@ set(destinationPath ${CMAKE_BINARY_DIR}/examples/test.ini)
 add_custom_command(TARGET copyAssets PRE_BUILD
                    COMMAND ${CMAKE_COMMAND} -E copy_if_different "${sourcePath}" "${destinationPath}")
 
+file(GLOB inis ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.ini)
+foreach(sourcePath ${inis})
+  string(REPLACE "${CMAKE_CURRENT_SOURCE_DIR}/tests" "${CMAKE_BINARY_DIR}" destinationPath ${sourcePath})
+
+  add_custom_command(TARGET copyAssets PRE_BUILD
+                     COMMAND ${CMAKE_COMMAND} -E copy_if_different "${sourcePath}" "${destinationPath}")
+endforeach()
+
 # INIReaderTest
 set(INIReaderTest_Path ${Ini_Reader_Path})
 add_executable(INIReaderTest "${INIReaderTest_Path}/INIReaderTest.cpp")
@@ -78,6 +86,12 @@ foreach(example ${examples})
     set_target_properties(${example_name} PROPERTIES COMPILE_FLAGS ${PROJECT_DEFINITIONS})
   endif()
 endforeach()
+
+# tests
+set(Tests_Path ${CMAKE_CURRENT_SOURCE_DIR}/tests)
+add_executable(tests "${Tests_Path}/unittest.c")
+target_link_libraries(tests ini)
+add_dependencies(tests copyAssets)
 
 # Flags
 if(MSVC)
