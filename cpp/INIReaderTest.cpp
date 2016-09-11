@@ -1,7 +1,23 @@
 // Example that shows simple usage of the INIReader class
 
 #include <iostream>
+#ifndef PROPOSED
 #include "INIReader.h"
+#else
+#include "proposed/INIReader.h"
+#endif
+
+#ifndef WIN32
+#include <ctime>
+#endif
+
+#define COUNT 1000000
+
+#ifndef WIN32
+static const clockid_t sClockId = CLOCK_MONOTONIC;
+static const long sNsInSecond = 1000000000;
+#define timespec2ns(A) (A.tv_sec * sNsInSecond + A.tv_nsec)
+#endif
 
 int main()
 {
@@ -11,11 +27,32 @@ int main()
         std::cout << "Can't load 'test.ini'\n";
         return 1;
     }
-    std::cout << "Config loaded from 'test.ini': version="
-              << reader.GetInteger("protocol", "version", -1) << ", name="
-              << reader.Get("user", "name", "UNKNOWN") << ", email="
-              << reader.Get("user", "email", "UNKNOWN") << ", pi="
-              << reader.GetReal("user", "pi", -1) << ", active="
-              << reader.GetBoolean("user", "active", true) << "\n";
+    #ifndef WIN32
+    timespec startTime;
+    clock_gettime(sClockId, &startTime);
+    #endif
+    for (size_t i = 0; i < COUNT; ++i) {
+        if (-1 == reader.GetInteger("protocol", "version", -1)) {
+            return 1;
+        }
+        if ("UNKNOWN" == reader.Get("user", "name", "UNKNOWN")) {
+            return 1;
+        }
+        if ("UNKNOWN" == reader.Get("user", "email", "UNKNOWN")) {
+            return 1;
+        }
+        if (-1 == reader.GetReal("user", "pi", -1)) {
+            return 1;
+        }
+        if (false == reader.GetBoolean("user", "active", false)) {
+            return 1;
+        }
+    }
+    #ifndef WIN32
+    timespec currentTime;
+    clock_gettime(sClockId, &currentTime);
+    long delta = (timespec2ns(currentTime) - timespec2ns(startTime));
+    std::cout << static_cast<double>(delta) / sNsInSecond << " seconds (" << delta << " nanoseconds)" << std::endl;
+    #endif
     return 0;
 }
