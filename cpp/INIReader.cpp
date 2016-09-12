@@ -21,7 +21,7 @@ int INIReader::ParseError() const
     return _error;
 }
 
-const std::string& INIReader::Get(const std::string& section, const std::string& name, const std::string& default_value) const
+std::string INIReader::Get(const std::string& section, const std::string& name, const std::string& default_value) const
 {
     const auto key = MakeKey(section, name);
     // Use _values.find() here instead of _values.at() to support pre C++11 compilers
