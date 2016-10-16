@@ -19,13 +19,13 @@ typedef struct
 typedef struct
 {
     const char* ptr;
-    size_t bytes_left;
+    int bytes_left;
 } buffer_ctx;
 
-static char* ini_buffer_reader(char* str, size_t num, void* stream)
+static char* ini_buffer_reader(char* str, int num, void* stream)
 {
     buffer_ctx* ctx = (buffer_ctx*)stream;
-    size_t idx = 0;
+    int idx = 0;
     char newline = 0;
 
     if (ctx->bytes_left <= 0)
@@ -80,9 +80,6 @@ static int handler(void* user, const char* section, const char* name,
 
 int main(int argc, char* argv[])
 {
-    (void)argc;
-    (void)argv;
-
     configuration config;
     buffer_ctx ctx;
 

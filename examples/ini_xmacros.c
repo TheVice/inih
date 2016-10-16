@@ -39,9 +39,6 @@ void dump_config(config *cfg)
 
 int main(int argc, char* argv[])
 {
-    (void)argc;
-    (void)argv;
-
     if (ini_parse("test.ini", handler, &Config) < 0)
         printf("Can't load 'test.ini', using defaults\n");
     dump_config(&Config);

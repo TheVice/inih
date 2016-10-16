@@ -7,10 +7,6 @@
 static int dumper(void* user, const char* section, const char* name,
                   const char* value)
 {
-    if (!user) {
-        return -1;
-    }
-
     static char prev_section[50] = "";
 
     if (strcmp(section, prev_section)) {
@@ -24,9 +20,6 @@ static int dumper(void* user, const char* section, const char* name,
 
 int main(int argc, char* argv[])
 {
-    (void)argc;
-    (void)argv;
-
     int error;
 
     if (argc <= 1) {

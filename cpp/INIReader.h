@@ -42,18 +42,9 @@ public:
     // and valid false values are "false", "no", "off", "0" (not case sensitive).
     bool GetBoolean(const std::string& section, const std::string& name, bool default_value) const;
 
-public:
-    INIReader() = delete;
-    INIReader(const INIReader& rhs) = delete;
-    INIReader(const INIReader&& lhs) = delete;
-    INIReader& operator = (const INIReader& rhs) = delete;
-    INIReader& operator = (const INIReader&& lhs) = delete;
-
 private:
     int _error;
     std::map<std::string, std::string> _values;
-
-private:
     static std::string MakeKey(const std::string& section, const std::string& name);
     static int ValueHandler(void* user, const char* section, const char* name,
                             const char* value);

@@ -1,2 +1,0 @@
-cl /O2 /EHsc /Fe:INIReaderTest /DWIN32 /D_WIN32 /D_WINDOWS /DNOCOMM /DWIN32_LEAN_AND_MEAN /D_WIN32_WINNT=0x0500 /D_UNICODE /DUNICODE /DNOMINMAX ../cpp/INIReaderTest.cpp ../cpp/INIReader.cpp ../ini.c
-cl /O2 /EHsc /Fe:INIReaderTest_proposed /DWIN32 /D_WIN32 /D_WINDOWS /DNOCOMM /DWIN32_LEAN_AND_MEAN /D_WIN32_WINNT=0x0500 /D_UNICODE /DUNICODE /DNOMINMAX /DPROPOSED ../cpp/INIReaderTest.cpp ../cpp/proposed/INIReader.cpp ../ini.c

@@ -32,9 +32,6 @@ static int handler(void* user, const char* section, const char* name,
 
 int main(int argc, char* argv[])
 {
-    (void)argc;
-    (void)argv;
-
     configuration config;
 
     if (ini_parse("test.ini", handler, &config) < 0) {

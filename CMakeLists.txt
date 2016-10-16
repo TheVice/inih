@@ -65,16 +65,6 @@ foreach(sourcePath ${inis})
                      COMMAND ${CMAKE_COMMAND} -E copy_if_different "${sourcePath}" "${destinationPath}")
 endforeach()
 
-# INIReaderTest
-set(INIReaderTest_Path ${Ini_Reader_Path})
-add_executable(INIReaderTest "${INIReaderTest_Path}/INIReaderTest.cpp")
-target_link_libraries(INIReaderTest ini_reader ini)
-if(PROJECT_DEFINITIONS)
-  set_target_properties(INIReaderTest PROPERTIES COMPILE_DEFINITIONS "${PROJECT_DEFINITIONS}")
-endif()
-target_include_directories(INIReaderTest PRIVATE ${Ini_Path} ${Ini_Reader_Path})
-add_dependencies(INIReaderTest copyAssets)
-
 # examples
 file(GLOB examples RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/examples ${CMAKE_CURRENT_SOURCE_DIR}/examples/*.c)
 foreach(example ${examples})
